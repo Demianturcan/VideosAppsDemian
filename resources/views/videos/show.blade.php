@@ -2,7 +2,7 @@
 @section('content')
     <section class="flex flex-col min-h-screen bg-gray-100 p-6">
         <div class="flex-grow">
-            <div class="max-w-md mx-auto bg-white shadow-md rounded-lg p-6">
+            <div class="max-w-xl mx-auto bg-white shadow-md rounded-lg p-6">
                 <h1 class="text-2xl font-bold mb-4">Video Details</h1>
 
                 <div class="mb-4">
@@ -22,7 +22,8 @@
 
                 <div class="mb-4">
                     <strong class="block text-gray-700">URL:</strong>
-                    <p class="mt-1">{{ $video->url }}</p>
+                    <iframe class="mt-1 w-full h-72" src="{{ $video->url }}" frameborder="0" allowfullscreen></iframe>
+
                 </div>
 
                 <div class="mb-4">

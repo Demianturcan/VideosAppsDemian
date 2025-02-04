@@ -7,7 +7,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/videos/{id}', [VideoController::class, 'show'])->name('videos.show');
+Route::get('/videos/{video}', [VideoController::class, 'show']);
 
 
 
@@ -20,3 +20,5 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+

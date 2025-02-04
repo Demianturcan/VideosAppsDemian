@@ -7,6 +7,8 @@ use Carbon\Carbon;
 
 /**
  * @property mixed $published_at
+ * @property mixed $title
+ * @property mixed $url
  * @method static findOrFail(int $id)
  * @method static where(string $string, int $userId)
  * @method static create(array $array)
@@ -14,6 +16,14 @@ use Carbon\Carbon;
  */
 class Video extends Model
 {
+    protected $fillable = [
+        'title',
+        'description',
+        'published_at',
+        'url',
+        'series_id'
+
+    ];
     protected array $dates = ['published_at'];
 
     /**
@@ -21,9 +31,12 @@ class Video extends Model
      *
      * @return string
      */
-    public function getFormattedPublishedAtAttribute(): string
+    protected function getFormattedPublishedAtAttribute(): string
     {
-        return Carbon::parse($this->published_at)->translatedFormat('j \d\e F \d\e Y');
+        if ($this->published_at === null) {
+            return '';
+        }
+        return Carbon::parse($this->published_at)->translatedFormat('j \o\f F \o\f Y');
     }
 
     /**
