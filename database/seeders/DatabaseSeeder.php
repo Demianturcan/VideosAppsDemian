@@ -27,9 +27,31 @@ class DatabaseSeeder extends Seeder
         UserHelpers::createDefaultUser();
         UserHelpers::createDefaultTeacher();
 
-
         VideoHelpers::createDefaultVideo();
+
+        UserHelpers::create_permissions();
+        UserHelpers::create_superadmin_user();
+        UserHelpers::create_regular_user();
+        UserHelpers::create_video_manager_user();
+
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

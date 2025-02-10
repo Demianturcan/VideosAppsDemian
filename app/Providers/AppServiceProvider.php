@@ -2,8 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
+
+/**
+ * @method registerPolicies()
+ */
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -19,6 +25,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::define('manage-videos', function (User $user){
+           return $user->hasRole('Video Manager');
+        });
+
+        Gate::define('super-admin', function (User $user){
+           return $user->isSuperAdmin();
+        });
+
     }
 }
+
