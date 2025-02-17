@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Helpers\UserHelpers;
+
 use App\Models\User;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,18 +24,12 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
+
     public function boot(): void
     {
-        Gate::define('manage-videos', function (User $user){
-           return $user->hasRole('Video Manager');
-        });
+        $this->registerPolicies();
 
-        Gate::define('super-admin', function (User $user){
-           return $user->isSuperAdmin();
-        });
+        UserHelpers::define_gates();
 
     }
 }

@@ -8,7 +8,7 @@ Route::get('/', function () {
 });
 
 Route::get('/videos/{video}', [VideoController::class, 'show']);
-
+Route::get('/videos/manage', [VideoController::class, 'index'])->name('videos.manage');
 
 
 Route::middleware([

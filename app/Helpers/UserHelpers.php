@@ -12,20 +12,20 @@ class UserHelpers
 {
     public static function createDefaultUser()
     {
-        // Crea un nou equip
-        $team = Team::create([
-            'name' => config('users.default.team_name'),
-            'personal_team' => true, // o false, depenent de com ho vulguis configurar
-        ]);
 
-        // Crea l'usuari i l'associa a l'equip creat
         $user = User::create([
             'name' => config('users.default.name'),
             'email' => config('users.default.email'),
             'password' => Hash::make(config('users.default.password')),
         ]);
 
-        $user->teams()->attach($team);
+        $team = Team::create([
+            'name' => config('users.default.team_name'),
+            'personal_team' => true,
+        ]);
+
+        $user->teams()->attach($team->id);
+        session(['team_id' => $team->id]);
 
         return $user;
     }
@@ -58,12 +58,8 @@ class UserHelpers
             'name' => $user->name . "'s Team",
             'personal_team' => true,
         ]);
-
-        $user->teams()->attach($team->id); // Attach the team ID.
-
-
+        $user->teams()->attach($team->id);
     }
-
 
     public static function create_regular_user()
     {
@@ -73,21 +69,21 @@ class UserHelpers
             'password' => Hash::make('123456789'),
         ]);
         self::add_personal_team($user);
-
+        $team = $user->teams()->first();
+        session(['team_id' => $team->id]);
         return $user;
-
     }
 
     public static function create_video_manager_user()
     {
         $user = User::create([
             'name' => 'Video Manager',
-            'email' => 'videosmanager@videosapp.com',
+            'email' => 'videomanager@example.com',
             'password' => Hash::make('123456789'),
         ]);
-
         self::add_personal_team($user);
-
+        $team = $user->teams()->first();
+        session(['team_id' => $team->id]);
         return $user;
     }
 
@@ -101,9 +97,15 @@ class UserHelpers
         ]);
     }
 
-    public static function define_gates()
+    public static function define_gates(): void
     {
+        Gate::define('manage-videos', function ($user, $teamId) {
+            return $user->hasPermissionTo('manage videos', $teamId);
+        });
 
+        Gate::define('super-admin', function ($user) {
+            return $user->hasRole('super admin');
+        });
     }
 
     public static function create_permissions(): void
@@ -111,6 +113,7 @@ class UserHelpers
         Permission::create(['name' => 'manage videos']);
         Permission::create(['name' => 'super admin']);
     }
+
 }
 
 

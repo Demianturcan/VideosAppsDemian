@@ -7,6 +7,12 @@ use Illuminate\Contracts\View\View;
 
 class VideoController extends Controller
 {
+
+    public function index(): View
+    {
+        return view('videos.manage');
+    }
+
     private ?string $view = null;
 
     /**
