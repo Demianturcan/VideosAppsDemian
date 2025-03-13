@@ -11,7 +11,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
+use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
+use mysql_xdevapi\Table;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -25,6 +27,7 @@ class User extends Authenticatable
 
     use HasApiTokens;
     use HasRoles;
+    use HasTeams;
 
 
 
@@ -44,6 +47,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'current_team_id'
     ];
 
 

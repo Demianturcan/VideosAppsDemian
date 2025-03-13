@@ -1,4 +1,4 @@
-@extends('layouts.videos-app-layout')
+@extends('layouts.videosapp')
 @section('content')
     <section class="flex flex-col min-h-screen bg-gray-100 p-6">
         <div class="flex-grow">
@@ -23,7 +23,6 @@
                 <div class="mb-4">
                     <strong class="block text-gray-700">URL:</strong>
                     <iframe class="mt-1 w-full h-72" src="{{ $video->url }}" frameborder="0" allowfullscreen></iframe>
-
                 </div>
 
                 <div class="mb-4">
@@ -46,7 +45,8 @@
                     <p class="mt-1">{{ $video->series_id }}</p>
                 </div>
 
-                <a href="/videos" class="text-gray-500 mt-4 no-underline bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded inline-block">Return</a>
+                <a href="{{ $previousUrl }}"
+                   class="text-gray-500 mt-4 no-underline bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded inline-block">Return</a>
                 {{--                <a href="{{ route('videos.edit', $video->id) }}" class="text-gray-50 mt-4 no-underline bg-pink-800 hover:bg-pink-700 px-4 py-2 rounded inline-block">Edit</a>--}}
 
             </div>

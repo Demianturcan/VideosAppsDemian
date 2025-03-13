@@ -7,13 +7,14 @@ use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserHelpers
 {
     public static function createDefaultUser()
     {
 
-        $user = User::create([
+        $user = User::firstOrCreate([
             'name' => config('users.default.name'),
             'email' => config('users.default.email'),
             'password' => Hash::make(config('users.default.password')),
@@ -46,7 +47,9 @@ class UserHelpers
             'super_admin' => true,
         ]);
 
-        $teacher->teams()->attach($team);
+        $teacher->current_team_id=$team->id;
+        $teacher->givePermissionTo('manage videos');
+        $teacher->save();
 
         return $teacher;
     }
@@ -57,6 +60,7 @@ class UserHelpers
         $team = Team::create([
             'name' => $user->name . "'s Team",
             'personal_team' => true,
+            'user_id' => $user->id,
         ]);
         $user->teams()->attach($team->id);
     }
@@ -64,7 +68,7 @@ class UserHelpers
     public static function create_regular_user()
     {
         $user = User::create([
-            'name' => 'regular',
+            'name' => 'Regular',
             'email' => 'regular@videosapp.com',
             'password' => Hash::make('123456789'),
         ]);
@@ -84,17 +88,31 @@ class UserHelpers
         self::add_personal_team($user);
         $team = $user->teams()->first();
         session(['team_id' => $team->id]);
+
+        $user->current_team_id=$team->id;
+        $user->givePermissionTo('manage videos');
+        $user->save();
         return $user;
     }
 
     public static function create_superadmin_user()
     {
-        return User::create([
-            'name' => 'Super Admin',
+        $user = User::firstOrCreate([
             'email' => 'superadmin@videosapp.com',
+            'name' => 'Super Admin',
             'password' => Hash::make('123456789'),
             'super_admin' => true,
         ]);
+
+        self::add_personal_team($user);
+        $team = $user->teams()->first();
+        session(['team_id' => $team->id]);
+
+        $user->current_team_id=$team->id;
+        $user->assignRole('super admin');
+        $user->save();
+
+        return $user;
     }
 
     public static function define_gates(): void
@@ -106,28 +124,21 @@ class UserHelpers
         Gate::define('super-admin', function ($user) {
             return $user->hasRole('super admin');
         });
+
+        /*
+        Gate::define('super-admin', function ($user) {
+            return $user->super_admin;
+        });
+        */
     }
 
     public static function create_permissions(): void
     {
         Permission::create(['name' => 'manage videos']);
-        Permission::create(['name' => 'super admin']);
+        $role = Role::create(['name' => 'super admin']);
+        $permissions = Permission::all();
+        $role->syncPermissions($permissions);
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

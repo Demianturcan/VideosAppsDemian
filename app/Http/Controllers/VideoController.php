@@ -10,7 +10,8 @@ class VideoController extends Controller
 
     public function index(): View
     {
-        return view('videos.manage');
+        $videos = Video::all();
+        return view('videos.index',['videos' => $videos]);
     }
 
     private ?string $view = null;
@@ -21,10 +22,17 @@ class VideoController extends Controller
      * @param Video $video
      * @return View
      */
-    public function show(Video $video): View
+
+
+     public function show(Video $video): View
     {
-        return view('videos.show', ['video' => $video]);
+        $previousUrl = url()->previous() ?? route('videos.manage'); // Fallback to 'videos.manage' route
+        return view('videos.show', [
+            'video' => $video,
+            'previousUrl' => $previousUrl,
+        ]);
     }
+
 
     /**
      * Display the videos tested by a specific user.
@@ -38,4 +46,5 @@ class VideoController extends Controller
         $videos = Video::where('tested_by', $userId)->get();
         return view($this->view, ['videos' => $videos]);
     }
+
 }

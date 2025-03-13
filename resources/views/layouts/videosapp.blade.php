@@ -10,7 +10,7 @@
 <header>
     <nav class="bg-gray-100 border-b-[1px] border-rose-700">
         <div class="container mx-auto flex flex-col lg:flex-row justify-between items-center">
-            <a href="/"
+            <a href="/videos"
                class="text-gray-800 font-bold text-2xl mb-4 lg:mb-0 hover:text-rose-700 hover:cursor-pointer no-underline">Videos App
             </a>
 
@@ -32,8 +32,10 @@
             </div>
 
             <div class="lg:flex lg:flex-row lg:space-x-4 lg:mt-0 mt-4 flex flex-col items-center text-lg">
-                <a href="/"
+                <a href="/videos"
                    class="text-gray-800 px-4 py-2 hover:text-rose-700 hover:-translate-y-0.5 no-underline transition-transform duration-300">Home</a>
+                <a href="/videos/manage"
+                   class="text-gray-800 px-4 py-2 hover:text-rose-700 hover:-translate-y-0.5 no-underline transition-transform duration-300 ">Manage</a>
 
 {{--                <a href="/films"--}}
 {{--                   class="text-gray-800  px-4 py-2 hover:text-rose-700 hover:-translate-y-0.5 no-underline transition-transform duration-300">Pel·licules</a>--}}
