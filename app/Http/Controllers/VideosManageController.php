@@ -39,16 +39,7 @@ class VideosManageController extends Controller
         Video::create($validated);
         return redirect()->route('videos.manage')->with('success', 'Video creado exitosamente.');
     }
-/*
-    public function show(Video $video): View
-    {
-        $previousUrl = url()->previous() ?? route('videos.manage'); // Fallback to 'videos.manage' route
-        return view('videos.show', [
-            'video' => $video,
-            'previousUrl' => $previousUrl,
-        ]);
-    }
-*/
+
     public function edit(Video $video): View
     {
         return view('videos.manage.edit', compact('video'));

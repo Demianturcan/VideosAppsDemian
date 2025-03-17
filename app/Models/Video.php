@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
@@ -16,6 +17,7 @@ use Carbon\Carbon;
  */
 class Video extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'title',
         'description',

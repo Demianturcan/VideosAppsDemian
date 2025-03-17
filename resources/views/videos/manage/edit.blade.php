@@ -40,7 +40,7 @@
                         Update Video
                     </button>
                 </form>
-                <a href="/videos/manage"
+                <a href="/videosmanage"
                    class="text-gray-500 mt-4 no-underline bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded inline-block">Return</a>
             </div>
         </div>

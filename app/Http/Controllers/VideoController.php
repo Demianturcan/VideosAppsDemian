@@ -26,7 +26,7 @@ class VideoController extends Controller
 
      public function show(Video $video): View
     {
-        $previousUrl = url()->previous() ?? route('videos.manage'); // Fallback to 'videos.manage' route
+        $previousUrl = url()->previous() ?? route('videos.manage');
         return view('videos.show', [
             'video' => $video,
             'previousUrl' => $previousUrl,

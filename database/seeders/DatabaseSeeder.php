@@ -6,7 +6,9 @@ use App\Helpers\UserHelpers;
 use App\Helpers\VideoHelpers;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Video;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,6 +25,47 @@ class DatabaseSeeder extends Seeder
         ]);
 
 */
+
+        if (!Permission::where('name', 'manage videos')->exists()) {
+            UserHelpers::create_permissions();
+        }
+
+        if (!User::where('email', config('users.default.email'))->exists()) {
+            UserHelpers::createDefaultUser();
+        }
+
+        if (!User::where('email', config('users.default.teacher_email'))->exists()) {
+            UserHelpers::createDefaultTeacher();
+        }
+
+        if (!User::where('email', 'superadmin@videosapp.com')->exists()) {
+            UserHelpers::create_superadmin_user();
+        }
+
+        if (!User::where('email', 'regular@videosapp.com')->exists()) {
+            UserHelpers::create_regular_user();
+        }
+
+        if (!User::where('email', 'videomanager@videosapp.com')->exists()) {
+            UserHelpers::create_video_manager_user();
+        }
+
+        if (!Video::where('title', config('videos.default.title'))->exists()) {
+            VideoHelpers::createDefaultVideo();
+        }
+
+        if (!Video::where('title', config('videos.default2.title'))->exists()) {
+            VideoHelpers::createDefaultVideo2();
+        }
+
+        if (!Video::where('title', config('videos.default3.title'))->exists()) {
+            VideoHelpers::createDefaultVideo3();
+        }
+
+        if (!Video::where('title', config('videos.default4.title'))->exists()) {
+            VideoHelpers::createDefaultVideo4();
+        }
+        /*
         UserHelpers::create_permissions();
         UserHelpers::createDefaultUser();
         UserHelpers::createDefaultTeacher();
@@ -35,6 +78,6 @@ class DatabaseSeeder extends Seeder
         VideoHelpers::createDefaultVideo2();
         VideoHelpers::createDefaultVideo3();
         VideoHelpers::createDefaultVideo4();
-
+*/
     }
 }

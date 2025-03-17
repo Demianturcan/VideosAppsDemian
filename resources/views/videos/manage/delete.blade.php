@@ -13,7 +13,7 @@
                         Delete Video
                     </button>
                 </form>
-                <a href="/videos/manage"
+                <a href="/videosmanage"
                    class="text-center text-gray-500 no-underline bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded inline-block">Cancel</a>
             </div>
         </div>

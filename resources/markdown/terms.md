@@ -56,3 +56,37 @@ S'han publicat els stubs seguint l'exemple de [Laravel News](https://laravel-new
 S'ha creat el test `VideosManageControllerTest` a la carpeta `tests/Feature/Videos` amb les funcions `user_with_permissions_can_manage_videos()`, `regular_users_cannot_manage_videos()`, `guest_users_cannot_manage_videos()`, `superadmins_can_manage_videos()`, `loginAsVideoManager()`, `loginAsSuperAdmin()` i `loginAsRegularUser()`.
 
 S'ha creat el test `UserTest` a la carpeta `tests/Unit` amb la funció `isSuperAdmin()`.
+
+## Sprint 4
+
+
+### 1. Creació de `VideosManageController`
+S'ha creat el controlador `VideosManageController` amb les funcions necessàries per gestionar els vídeos, incloent la creació, edició, actualització, eliminació i visualització de vídeos.
+
+### 2. Creació de la funció `index` a `VideosController`
+S'ha afegit la funció `index` a `VideosController` per mostrar la llista de vídeos.
+
+### 3. Verificació de la creació de vídeos a `VideoHelpers` i `DatabaseSeeder`
+S'ha verificat que es creïn 3 vídeos per defecte a `VideoHelpers` i s'han afegit al `DatabaseSeeder`.
+
+### 4. Creació de vistes per a les operacions CRUD
+S'han creat les vistes per a les operacions CRUD de vídeos, accessibles només per a usuaris amb els permisos adients:
+- `index.blade.php`
+- `create.blade.php`
+- `edit.blade.php`
+- `delete.blade.php`
+
+### 5. Modificació del test `user_with_permissions_can_manage_videos()`
+S'ha modificat el test `user_with_permissions_can_manage_videos()` per assegurar que hi hagi 3 vídeos.
+
+### 6. Creació de permisos de vídeos a `UserHelpers`
+S'han creat els permisos necessaris per gestionar vídeos a `UserHelpers` i s'han assignat als usuaris corresponents.
+
+### 7. Creació de funcions de test a `VideoTest` i `VideosManageControllerTest`
+S'han creat diverses funcions de test per assegurar que els usuaris amb i sense permisos puguin gestionar els vídeos correctament.
+
+### 8. Creació de rutes per a `videos/manage`
+S'han creat les rutes per a les operacions CRUD de vídeos amb el middleware corresponent, assegurant que les rutes CRUD només siguin visibles quan l'usuari està logejat.
+
+### 9. Afegir navbar i footer a la plantilla `videosapp`
+S'ha afegit una barra de navegació i un peu de pàgina a la plantilla `resources/layouts/videosapp` per facilitar la navegació entre pàgines.

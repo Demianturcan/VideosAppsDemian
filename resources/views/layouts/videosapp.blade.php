@@ -34,9 +34,10 @@
             <div class="lg:flex lg:flex-row lg:space-x-4 lg:mt-0 mt-4 flex flex-col items-center text-lg">
                 <a href="/videos"
                    class="text-gray-800 px-4 py-2 hover:text-rose-700 hover:-translate-y-0.5 no-underline transition-transform duration-300">Home</a>
-                <a href="/videos/manage"
+                <a href="/videosmanage"
                    class="text-gray-800 px-4 py-2 hover:text-rose-700 hover:-translate-y-0.5 no-underline transition-transform duration-300 ">Manage</a>
-
+                <a href="/login"
+                   class="text-gray-800 px-4 py-2 hover:text-rose-700 hover:-translate-y-0.5 no-underline transition-transform duration-300 ">Log In</a>
 {{--                <a href="/films"--}}
 {{--                   class="text-gray-800  px-4 py-2 hover:text-rose-700 hover:-translate-y-0.5 no-underline transition-transform duration-300">Pel·licules</a>--}}
 {{--                <a href="/shows"--}}
