@@ -17,12 +17,18 @@
 
             <div>
                 <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+{{--                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />--}}
+                <input id="email" type="email" name="email" value="{{ old('email', 'videomanager@videosapp.com') }}" required autofocus
+                       class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                       placeholder="Enter your email">
             </div>
 
             <div class="mt-4">
                 <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+{{--                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />--}}
+                <input id="password" type="password" name="password" value="{{ old('password', '123456789') }}" required
+                       class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                       placeholder="Enter your password">
             </div>
 
             <div class="block mt-4">

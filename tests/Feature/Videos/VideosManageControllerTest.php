@@ -27,7 +27,7 @@ class VideosManageControllerTest extends TestCase
         $this->loginAsVideoManager();
 
         // Fer una sol·licitud GET a la ruta /videosmanage
-        $response = $this->get('/videosmanage');
+        $response = $this->get('/video/manage');
 
         // Comprovar que la resposta és exitosa (codi d'estat 200)
         $response ->assertStatus(200);
@@ -38,7 +38,7 @@ class VideosManageControllerTest extends TestCase
 
         $videos = Video::all();
         // Attempt to access the video management route
-        $response = $this->get('/videosmanage');
+        $response = $this->get('/video/manage');
 
         // Assert that the response status is 200 OK
         $response->assertStatus(200);
@@ -54,7 +54,7 @@ class VideosManageControllerTest extends TestCase
         $this->loginAsRegularUser();
 
         // Attempt to access the video management route
-        $response = $this->get('/videosmanage');
+        $response = $this->get('/video/manage');
 
         // Assert that the response status is 403 Forbidden
         $response->assertStatus(403);
@@ -62,7 +62,7 @@ class VideosManageControllerTest extends TestCase
     #[test] public function guest_users_cannot_manage_videos(): void
     {
         // Attempt to access the video management route without logging in
-        $response = $this->get('/videosmanage');
+        $response = $this->get('/video/manage');
 
         $response->assertStatus(302);
     }
@@ -71,7 +71,7 @@ class VideosManageControllerTest extends TestCase
         $this->loginAsSuperAdmin();
 
         // Attempt to access the video management route
-        $response = $this->get('/videosmanage');
+        $response = $this->get('/video/manage');
 
         // Assert that the response status is 200 OK
         $response->assertStatus(200);
@@ -79,14 +79,14 @@ class VideosManageControllerTest extends TestCase
     #[test] public function user_with_permissions_can_see_add_videos(): void
     {
         $this->loginAsVideoManager();
-        $response = $this->get('/videos/create');
+        $response = $this->get('/video/create');
         $response->assertStatus(200);
     }
 
     #[test] public function user_without_videos_manage_create_cannot_see_add_videos(): void
     {
         $this->loginAsRegularUser();
-        $response = $this->get('/videos/create');
+        $response = $this->get('/video/create');
         $response->assertStatus(403);
     }
 
@@ -97,8 +97,17 @@ class VideosManageControllerTest extends TestCase
             'title' => 'Test Video',
             'description' => 'Test Description',
             'url' => 'http://example.com/video.mp4',
+            'series_id'=>1,
         ]);
-        $response->assertStatus(201);
+        $response->assertRedirect(route('videos.manage'));
+
+        // Verify that the video was created
+        $this->assertDatabaseHas('videos', [
+            'title' => 'Test Video',
+            'description' => 'Test Description',
+            'url' => 'http://example.com/video.mp4',
+            'series_id' => 1,
+        ]);
     }
 
     #[test] public function user_without_permissions_cannot_store_videos(): void
@@ -108,6 +117,7 @@ class VideosManageControllerTest extends TestCase
             'title' => 'Test Video',
             'description' => 'Test Description',
             'url' => 'http://example.com/video.mp4',
+            'series_id'=>1,
         ]);
         $response->assertStatus(403);
     }
@@ -117,7 +127,10 @@ class VideosManageControllerTest extends TestCase
         $this->loginAsVideoManager();
         $video = Video::first();
         $response = $this->delete("/videos/{$video->id}/destroy");
-        $response->assertStatus(200);
+
+        $response->assertRedirect(route('videos.manage'));
+
+        $this->assertDatabaseMissing('videos', ['id' => $video->id]);
     }
 
     #[test] public function user_without_permissions_cannot_destroy_videos(): void
@@ -152,8 +165,17 @@ class VideosManageControllerTest extends TestCase
             'title' => 'Updated Title',
             'description' => 'Updated Description',
             'url' => 'http://example.com/updated_video.mp4',
+            'series_id' => 1,
         ]);
-        $response->assertStatus(200);
+        $response->assertRedirect(route('videos.manage'));
+
+        $this->assertDatabaseHas('videos', [
+            'id' => $video->id,
+            'title' => 'Updated Title',
+            'description' => 'Updated Description',
+            'url' => 'http://example.com/updated_video.mp4',
+            'series_id' => 1,
+        ]);
     }
 
     #[test] public function user_without_permissions_cannot_update_videos(): void
