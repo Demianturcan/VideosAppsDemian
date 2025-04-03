@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UsersManageController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\VideosManageController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +25,24 @@ Route::middleware(['auth', 'can:manage-videos'])->group(function () {
 });
 
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/users', [UsersController::class, 'index'])->name('users');
+    Route::get('/user/{user}', [UsersController::class, 'show'])->name('user.show');
+
+});
+
+Route::middleware(['auth', 'can:manage users'])->group(function () {
+    Route::get('/users/manage', [UsersManageController::class, 'index'])->name('users.manage');
+    Route::get('/users/create', [UsersManageController::class, 'create'])->name('user.create');
+    Route::post('/users/store', [UsersManageController::class, 'store'])->name('user.store');
+    Route::get('/users/{user}/edit', [UsersManageController::class, 'edit'])->name('user.edit');
+    Route::put('/users/{user}', [UsersManageController::class, 'update'])->name('user.update');
+    Route::get('/users/{user}/delete', [UsersManageController::class, 'delete'])->name('user.delete');
+    Route::delete('/users/{user}/destroy', [UsersManageController::class, 'destroy'])->name('user.destroy');
+});
+
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -33,4 +53,9 @@ Route::middleware([
     })->name('dashboard');
 });
 
+/*
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
 
+*/

@@ -29,6 +29,7 @@ El projecte inclou migracions de base de dades per crear i gestionar les taules
 El fitxer de migració es troba al directori `database/migrations` i defineix l'estructura de la taula `videos`.
 
 
+
 ## Sprint 3
 
 ### Instal·lació del paquet spatie/laravel-permission
@@ -57,8 +58,9 @@ S'ha creat el test `VideosManageControllerTest` a la carpeta `tests/Feature/Vide
 
 S'ha creat el test `UserTest` a la carpeta `tests/Unit` amb la funció `isSuperAdmin()`.
 
-## Sprint 4
 
+
+## Sprint 4
 
 ### 1. Creació de `VideosManageController`
 S'ha creat el controlador `VideosManageController` amb les funcions necessàries per gestionar els vídeos, incloent la creació, edició, actualització, eliminació i visualització de vídeos.
@@ -90,3 +92,63 @@ S'han creat les rutes per a les operacions CRUD de vídeos amb el middleware cor
 
 ### 9. Afegir navbar i footer a la plantilla `videosapp`
 S'ha afegit una barra de navegació i un peu de pàgina a la plantilla `resources/layouts/videosapp` per facilitar la navegació entre pàgines.
+
+
+
+
+## Sprint 5
+
+### 1. S'ha afegit el camp `user_id` a la taula de vídeos
+- Afegit el camp `user_id` a la taula `videos` per guardar l'usuari que ha afegit el vídeo.
+- Modificat el `VideoController`, `Video` model i `VideoHelpers` per suportar aquest canvi.
+
+### 2. S'han arreglat tests fallits
+- Corregit els tests fallits dels sprints anteriors després de modificar el codi.
+
+### 3. S'ha creat `UsersManageController`
+- Creat el `UsersManageController` amb les funcions `testedby`, `index`, `store`, `edit`, `update`, `delete` i `destroy`.
+
+### 4. S'han creat funcions `index` i `show` a `UsersController`
+- Afegit les funcions `index` i `show` a `UsersController`.
+
+### 5. S'han creat vistes per al CRUD d'usuaris
+- Creat les vistes per al CRUD d'usuaris accessibles només per a usuaris amb permisos adients:
+    - `resources/views/users/manage/index.blade.php`
+    - `resources/views/users/manage/create.blade.php`
+    - `resources/views/users/manage/edit.blade.php`
+    - `resources/views/users/manage/delete.blade.php`
+
+### 6. S'ha afegit taula del CRUD d'usuaris a `index.blade.php`
+- Afegit la taula del CRUD d'usuaris a la vista `index.blade.php`.
+
+### 7. S'ha afegit formulari per afegir usuaris a `create.blade.php`
+- Afegit el formulari per afegir usuaris a `create.blade.php` utilitzant l'atribut `data-qa` per facilitar els tests.
+
+### 8. S'ha afegit taula del CRUD d'usuaris a `edit.blade.php`
+- Afegit la taula del CRUD d'usuaris a `edit.blade.php`.
+
+### 9. S'ha afegit confirmació d'eliminació d'usuari a `delete.blade.php`
+- Afegit la confirmació d'eliminació d'usuari a `delete.blade.php`.
+
+### 10. S'ha creat vista `resources/views/users/index.blade.php`
+- Creat la vista `resources/views/users/index.blade.php` per veure tots els usuaris, buscar-los i accedir al detall de l'usuari i els seus vídeos.
+
+### 11. S'han creat permisos de gestió d'usuaris a `UserHelpers`
+- Creat els permisos de gestió d'usuaris per al CRUD i s'han assignat als usuaris `superadmin`.
+
+### 12. S'han creat funcions de test a `UserTest`
+- Creat les funcions de test a `UserTest`:
+
+### 13. S'han creat funcions de test a `UsersManageControllerTest`
+- Creat les funcions de test a `UsersManageControllerTest`:
+
+### 14. S'han creat rutes per al CRUD d'usuaris
+- Creat les rutes per al CRUD d'usuaris amb el middleware corresponent i les rutes `index` i `show` d'usuaris. Les rutes només són visibles quan l'usuari està logejat.
+
+### 15. S'ha assegurat la navegació entre pàgines
+- Assegurat que es pugui navegar entre pàgines.
+- SModificat la visibilitat dels botons de navegació segons l'autentificació.
+
+### 16. S'han comprovat els fitxers creats amb Larastan
+- Comprovat tots els fitxers creats amb Larastan per assegurar la qualitat del codi.
+

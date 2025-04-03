@@ -13,7 +13,6 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
-use mysql_xdevapi\Table;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -48,10 +47,13 @@ class User extends Authenticatable
         'email',
         'password',
         'team_id',
+        'super_admin',
+
     ];
-
-
-
+    public function videos () : HasMany
+    {
+        return $this -> hasMany(Video::class);
+    }
 
     public function teams(): BelongsToMany
     {
@@ -96,9 +98,9 @@ class User extends Authenticatable
     {
         return $this->super_admin;
     }
-    public function testedBy(): void
+    public function testedBy(): HasMany
     {
-
+        return $this->hasMany(Video::class, 'tested_by');
     }
 
 }

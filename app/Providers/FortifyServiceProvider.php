@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Http\Responses\LoginResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -20,7 +21,17 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->instance(LoginResponse::class, new class extends LoginResponse {
+            public function toResponse($request)
+            {
+                $intended = $request->session()->get('url.intended');
+                if ($intended) {
+                    return redirect($intended);
+                } else {
+                    return redirect('/videos'); // or any default route
+                }
+            }
+        });
     }
 
     /**

@@ -17,6 +17,7 @@ class VideoHelpers
             'previous' => null,
             'next' => null,
             'series_id' => 1,
+            'user_id' => 1,
         ]);
     }
     public static function createDefaultVideo2()
@@ -29,6 +30,7 @@ class VideoHelpers
             'previous' => null,
             'next' => null,
             'series_id' => 2,
+            'user_id' => 4,
         ]);
     }
     public static function createDefaultVideo3()
@@ -41,6 +43,7 @@ class VideoHelpers
             'previous' => null,
             'next' => null,
             'series_id' => 3,
+            'user_id' => 3,
         ]);
     }
     public static function createDefaultVideo4()
@@ -53,6 +56,7 @@ class VideoHelpers
             'previous' => null,
             'next' => null,
             'series_id' => 3,
+            'user_id' => 2,
         ]);
     }
 

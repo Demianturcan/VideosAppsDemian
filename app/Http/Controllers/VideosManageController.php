@@ -10,11 +10,11 @@ use Illuminate\Http\Request;
 
 class VideosManageController extends Controller
 {
-    public function testedby()
+    public function testedby(int $userId): View
     {
-
+        $videos = Video::where('tested_by', $userId)->get();
+        return view('videos.manage.tested_by', ['videos' => $videos]);
     }
-
     public function index() :View
     {
         $videos = Video::all();
@@ -33,11 +33,12 @@ class VideosManageController extends Controller
             'url' => 'required|url',
             'previous' => 'nullable|integer|exists:videos,id',
             'next' => 'nullable|integer|exists:videos,id',
-            'series_id' => 'required|integer'
+            'series_id' => 'required|integer',
+            'user_id' => 'required|exists:users,id',
         ]);
         $validated['published_at'] = now();
         Video::create($validated);
-        return redirect()->route('videos.manage')->with('success', 'Video creado exitosamente.');
+        return redirect()->route('videos.manage')->with('success', 'Video created successfully.');
     }
 
     public function edit(Video $video): View
@@ -58,7 +59,7 @@ class VideosManageController extends Controller
         ]);
 
         $video->update($validated);
-        return redirect()->route('videos.manage')->with('success', 'Video actualizado exitosamente.');
+        return redirect()->route('videos.manage')->with('success', 'Video updated successfully.');
     }
 
     public function delete(Video $video)
@@ -70,6 +71,8 @@ class VideosManageController extends Controller
     public function destroy(Video $video): RedirectResponse
     {
         $video->delete();
-        return redirect()->route('videos.manage')->with('success', 'Video eliminado exitosamente.');
+        return redirect()->route('videos.manage')->with('success', 'Video deleted successfully.');
     }
 }
+
+

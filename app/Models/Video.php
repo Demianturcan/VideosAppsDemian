@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property mixed $published_at
@@ -19,13 +20,17 @@ class Video extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'user_id',
         'title',
         'description',
         'published_at',
         'url',
         'series_id'
-
     ];
+    public function user(): BelongsTo
+    {
+        return $this-> belongsTo(User::class);
+    }
     protected array $dates = ['published_at'];
 
     /**

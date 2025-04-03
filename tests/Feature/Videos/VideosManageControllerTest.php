@@ -92,12 +92,14 @@ class VideosManageControllerTest extends TestCase
 
     #[test] public function user_with_permissions_can_store_videos(): void
     {
-        $this->loginAsVideoManager();
+        $user = $this->loginAsVideoManager();
+
         $response = $this->post('/videos/store', [
             'title' => 'Test Video',
             'description' => 'Test Description',
             'url' => 'http://example.com/video.mp4',
             'series_id'=>1,
+            'user_id'=>$user->id,
         ]);
         $response->assertRedirect(route('videos.manage'));
 
@@ -106,8 +108,28 @@ class VideosManageControllerTest extends TestCase
             'title' => 'Test Video',
             'description' => 'Test Description',
             'url' => 'http://example.com/video.mp4',
-            'series_id' => 1,
+            'user_id'=>$user->id,
         ]);
+
+        $user = $this->loginAsSuperAdmin();
+
+        $response = $this->post('/videos/store', [
+            'title' => 'Test Video 2',
+            'description' => 'Test Description',
+            'url' => 'http://example.com/video.mp4',
+            'series_id'=>1,
+            'user_id'=>$user->id,
+        ]);
+        $response->assertRedirect(route('videos.manage'));
+
+        // Verify that the video was created
+        $this->assertDatabaseHas('videos', [
+            'title' => 'Test Video 2',
+            'description' => 'Test Description',
+            'url' => 'http://example.com/video.mp4',
+            'user_id'=>$user->id,
+        ]);
+
     }
 
     #[test] public function user_without_permissions_cannot_store_videos(): void
@@ -191,21 +213,24 @@ class VideosManageControllerTest extends TestCase
     }
 
 
-    private function loginAsVideoManager(): void
+    private function loginAsVideoManager(): User
     {
         $user = User::where('email', 'videomanager@videosapp.com')->first() ?? UserHelpers::create_video_manager_user();
         $this->actingAs($user);
+        return $user;
     }
 
-    private function loginAsSuperAdmin(): void
+    private function loginAsSuperAdmin()
     {
         $user = User::where('email', 'superadmin@videosapp.com')->first() ?? UserHelpers::create_superadmin_user();
         $this->actingAs($user);
+        return $user;
     }
 
-    private function loginAsRegularUser(): void
+    private function loginAsRegularUser()
     {
-        $user = User::where('email', 'regular@videosapp.com')->first() ?? UserHelpers::create_regular_user();
+        $user = User::where('email', 'regularuser@videosapp.com')->first() ?? UserHelpers::create_regular_user();
         $this->actingAs($user);
+        return $user;
     }
 }

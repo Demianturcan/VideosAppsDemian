@@ -55,9 +55,7 @@ class UserHelpers
         ]);
 
         self::add_personal_team($user);
-
         $user->givePermissionTo('manage videos');
-
 
         return $user;
     }
@@ -65,8 +63,8 @@ class UserHelpers
     public static function create_regular_user()
     {
         $user = User::create([
-            'name' => 'Regular',
-            'email' => 'regular@videosapp.com',
+            'name' => 'RegularUser',
+            'email' => 'regularuser@videosapp.com',
             'password' => Hash::make('123456789'),
         ]);
 
@@ -102,6 +100,9 @@ class UserHelpers
         self::add_personal_team($user);
 
         $user->assignRole('super admin');
+        $user->givePermissionTo('manage videos');
+        $user->givePermissionTo('manage users');
+        $user->save();
 
         return $user;
     }
@@ -123,9 +124,11 @@ class UserHelpers
     {
 
         Permission::create(['name' => 'manage videos']);
+        Permission::create(['name' => 'manage users']);
         $role = Role::firstOrCreate(['name' => 'super admin']);
         $permissions = Permission::all();
         $role->syncPermissions($permissions);
+
     }
 
 }

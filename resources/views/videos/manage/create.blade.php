@@ -7,6 +7,7 @@
                 <form action="{{ route('video.store') }}" method="post" data-qa="form-create-video">
                     @csrf
                     <div class="mb-4">
+                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                         <label for="title" class="block text-sm font-medium text-gray-700">Title:</label>
                         <input type="text" name="title" value="{{ old('title', 'Default Title') }}" required
                                class="mt-1 block w-full border border-gray-300 rounded-md p-2"
