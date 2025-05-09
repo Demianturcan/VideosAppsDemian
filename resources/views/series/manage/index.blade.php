@@ -15,7 +15,7 @@
                             <th class="py-3 px-6 text-left">Description</th>
                             <th class="py-3 px-6 text-left">User</th>
                             <th class="py-3 px-6 text-left">Published At</th>
-                            <th class="py-3 px-6 text-center">Actions</th>
+                            <th class="py-3 px-6 text-center"></th>
                         </tr>
                         </thead>
                         <tbody class="text-gray-600 text-sm font-light">

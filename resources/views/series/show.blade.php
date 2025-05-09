@@ -1,7 +1,7 @@
 @extends('layouts.videosapp')
 @section('content')
-    <section class="flex min-h-screen bg-gray-100 p-6">
-        <div>
+    <section class="flex flex-col min-h-screen bg-gray-100 p-6">
+        <div class="flex-grow">
             <div class="max-w-5xl mx-auto">
                 <h1 class="text-3xl font-bold mb-4 text-pink-800">{{ $serie->title }}</h1>
                 <p class="text-gray-700 mb-6">{{ $serie->description }}</p>

@@ -22,3 +22,20 @@ class SeriesController extends Controller
         return view('series.show', ['serie' => $serie, 'videos' => $videos]);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

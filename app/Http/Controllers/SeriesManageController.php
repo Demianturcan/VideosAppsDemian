@@ -50,7 +50,8 @@ class SeriesManageController extends Controller
      */
     public function edit(Serie $serie)
     {
-        return view('series.manage.edit', compact('serie'));
+        $previousUrl = url()->previous();
+        return view('series.manage.edit', compact('serie', 'previousUrl'));
     }
 
     /**
@@ -74,7 +75,8 @@ class SeriesManageController extends Controller
      */
     public function delete(Serie $serie)
     {
-        return view('series.manage.delete', compact('serie'));
+        $previousUrl = url()->previous();
+        return view('series.manage.delete', compact('serie', 'previousUrl'));
     }
 
     /**

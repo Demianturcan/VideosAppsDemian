@@ -27,7 +27,6 @@ class SeriesManageControllerTest extends TestCase
         $response = $this->get('/series/create');
         $response->assertStatus(200);
     }
-
     #[test]
     public function user_without_series_manage_create_cannot_see_add_series(): void
     {
@@ -36,7 +35,6 @@ class SeriesManageControllerTest extends TestCase
 
         $response->assertStatus(403);
     }
-
     #[test]
     public function user_with_permissions_can_store_series(): void
     {
@@ -50,7 +48,6 @@ class SeriesManageControllerTest extends TestCase
         $response->assertRedirect('/series/manage');
         $this->assertDatabaseHas('series', ['title' => 'Test Series']);
     }
-
     #[test]
     public function user_without_permissions_cannot_store_series(): void
     {
@@ -64,7 +61,6 @@ class SeriesManageControllerTest extends TestCase
         $response->assertStatus(403);
         $this->assertDatabaseMissing('series', ['title' => 'Test Series']);
     }
-
     #[test]
     public function user_with_permissions_can_destroy_series(): void
     {
@@ -77,7 +73,6 @@ class SeriesManageControllerTest extends TestCase
         $this->delete('/series/' . $serie->id . '/destroy');
         $this->assertDatabaseMissing('series', ['id' => $serie->id]);
     }
-
     #[test]
     public function user_without_permissions_cannot_destroy_series(): void
     {
@@ -88,7 +83,6 @@ class SeriesManageControllerTest extends TestCase
         $response->assertStatus(403);
         $this->assertDatabaseHas('series', ['id' => $serie->id]);
     }
-
     #[test]
     public function user_with_permissions_can_see_edit_series(): void
     {
@@ -98,7 +92,6 @@ class SeriesManageControllerTest extends TestCase
 
         $response->assertStatus(200);
     }
-
     #[test]
     public function user_without_permissions_cannot_see_edit_series(): void
     {
@@ -108,7 +101,6 @@ class SeriesManageControllerTest extends TestCase
 
         $response->assertStatus(403);
     }
-
     #[test]
     public function user_with_permissions_can_update_series(): void
     {
@@ -123,7 +115,6 @@ class SeriesManageControllerTest extends TestCase
         $response->assertRedirect('/series/manage');
         $this->assertDatabaseHas('series', ['id' => $serie->id, 'title' => 'Updated Series']);
     }
-
     #[test]
     public function user_without_permissions_cannot_update_series(): void
     {
@@ -138,7 +129,6 @@ class SeriesManageControllerTest extends TestCase
         $response->assertStatus(403);
         $this->assertDatabaseMissing('series', ['title' => 'Updated Series']);
     }
-
     #[test]
     public function user_with_permissions_can_manage_series(): void
     {
@@ -146,7 +136,6 @@ class SeriesManageControllerTest extends TestCase
         $response = $this->get('/series/manage');
         $response->assertStatus(200);
     }
-
     #[test]
     public function regular_users_cannot_manage_series(): void
     {
@@ -154,14 +143,12 @@ class SeriesManageControllerTest extends TestCase
         $response = $this->get('/series/manage');
         $response->assertStatus(403);
     }
-
     #[test]
     public function guest_users_cannot_manage_series(): void
     {
         $response = $this->get('/series/manage');
         $response->assertRedirect('/login');
     }
-
     #[test]
     public function videomanagers_can_manage_series(): void
     {
@@ -169,7 +156,6 @@ class SeriesManageControllerTest extends TestCase
         $response = $this->get('/series/manage');
         $response->assertStatus(200);
     }
-
     #[test]
     public function superadmins_can_manage_series(): void
     {
@@ -177,20 +163,16 @@ class SeriesManageControllerTest extends TestCase
         $response = $this->get('/series/manage');
         $response->assertStatus(200);
     }
-
-
     public function loginAsVideoManager(): void
     {
         $user = User::where('email', 'videomanager@videosapp.com')->first() ?? UserHelpers::create_video_manager_user();
         $this->actingAs($user);
     }
-
     private function loginAsSuperAdmin(): void
     {
         $user = User::where('email', 'superadmin@videosapp.com')->first() ?? UserHelpers::create_superadmin_user();
         $this->actingAs($user);
     }
-
     private function loginAsRegularUser(): void
     {
         $user = User::where('email', 'regularuser@videosapp.com')->first() ?? UserHelpers::create_regular_user();

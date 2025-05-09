@@ -11,7 +11,7 @@
                     <input type="hidden" name="previous_url" value="{{ $previousUrl }}">
                     <div class="mb-4">
                         <label class="inline-flex items-center px-4">
-
+                            <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600" name="delete_videos" value="1">
                             <span class="ml-2 text-gray-700">Delete associated videos</span>
                         </label>
                     </div>

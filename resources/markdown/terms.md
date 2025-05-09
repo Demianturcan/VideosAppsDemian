@@ -152,3 +152,49 @@ S'ha afegit una barra de navegació i un peu de pàgina a la plantilla `resource
 ### 16. S'han comprovat els fitxers creats amb Larastan
 - Comprovat tots els fitxers creats amb Larastan per assegurar la qualitat del codi.
 
+
+
+## Sprint 6
+
+### 1. Modificació de vídeos per assignar-los a sèries
+- S'ha afegit l'opció de relacionar un vídeo amb una sèrie quan es crea i edita.
+
+### 2. Permisos de creació de vídeos per a usuaris regulars
+- S'han afegit les funcions del CRUD per a usuaris regulars a `VideoController`.
+- S'han creat els botons per al CRUD a la vista de vídeos.
+- S'han afegit funcions i rutes per a la gestió per part de l'usuari a `VideoController`, aprofitant algunes operacions existents a `VideoManageController`.
+- A la pàgina `show` de vídeos es mostren dos botons per modificar-los, visibles només per al propietari.
+
+### 3. Creació de la migració de sèries
+- S'ha creat la migració per a la taula de sèries amb els camps `id`, `title`, `description`, `image`, `user_name`, `user_photo_url`, `published_at`.
+
+### 4. Creació del model de sèries
+- S'han creat les funcions `testedby`, `videos` (relació 1:N), `getFormattedCreatedAtAttribute`, `getFormattedForHumansCreatedAtAttribute`, `getCreatedAtTimestampAttribute`.
+
+### 5. Relació 1:N al model de vídeos
+- S'ha afegit la relació 1:N al model de vídeos amb sèries.
+
+### 6. Creació de `SeriesManageController` i `SeriesController`
+- S'ha creat el controlador `SeriesManageController` amb les funcions `testedby`, `index`, `store`, `edit`, `update`, `delete` i `destroy`.
+- S'ha creat el controlador `SeriesController` amb les funcions `index` i `show`.
+
+### 7. Helpers per al seed de sèries
+- S'han creat els helpers per al seed amb 3 sèries.
+
+### 8. Vistes per al CRUD de sèries
+- S'han creat les vistes per al CRUD, disponibles per als usuaris amb permisos adients: `resources/views/series/manage/index.blade.php`, `resources/views/series/manage/create.blade.php`, `resources/views/series/manage/edit.blade.php`, `resources/views/series/manage/delete.blade.php`.
+
+### 9. Confirmació d'eliminació de sèries
+- A la vista `delete.blade.php`, s'ha afegit la confirmació per eliminar sèries amb l'opció de desassignar o eliminar els vídeos relacionats.
+
+### 10. Vistes `index` i `show` de sèries
+- S'ha afegit la vista `index` de sèries i el `show` corresponent per mostrar els vídeos relacionats: `resources/views/series/index.blade.php`.
+
+### 11. Permisos de gestió de sèries
+- S'han creat helpers per assignar els permisos adients per a sèries.
+
+### 12. Tests de permisos a `SeriesManageControllerTest`
+- S'han creat els tests de permisos adients per a les sèries a `SeriesManageControllerTest`:
+
+### 13. Rutes per al CRUD de sèries
+- S'han creat les rutes de `series/manage` per al CRUD de les sèries amb el seu middleware corresponent i la ruta de l'índex i el `show` de sèries.
