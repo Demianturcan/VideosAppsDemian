@@ -16,7 +16,7 @@ class VideoHelpers
             'published_at' => Carbon::parse('2023-12-25'),
             'previous' => null,
             'next' => null,
-            'series_id' => 1,
+//            'series_id' => 1,
             'user_id' => 1,
         ]);
     }
@@ -29,7 +29,7 @@ class VideoHelpers
             'published_at' => Carbon::parse('2023-12-25'),
             'previous' => null,
             'next' => null,
-            'series_id' => 2,
+//            'series_id' => 2,
             'user_id' => 4,
         ]);
     }
@@ -42,7 +42,7 @@ class VideoHelpers
             'published_at' => Carbon::parse('2023-12-25'),
             'previous' => null,
             'next' => null,
-            'series_id' => 3,
+//            'series_id' => 3,
             'user_id' => 3,
         ]);
     }
@@ -55,7 +55,7 @@ class VideoHelpers
             'published_at' => Carbon::parse('2023-12-25'),
             'previous' => null,
             'next' => null,
-            'series_id' => 3,
+//            'series_id' => 3,
             'user_id' => 2,
         ]);
     }

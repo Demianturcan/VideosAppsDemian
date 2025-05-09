@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\SeriesController;
+use App\Http\Controllers\SeriesManageController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UsersManageController;
 use App\Http\Controllers\VideoController;
@@ -11,27 +13,49 @@ Route::get('/', function () {
 });
 
 
+Route::get('/users', [UsersController::class, 'index'])->name('users');
+Route::get('/user/{user}', [UsersController::class, 'show'])->name('user.show');
+
+
+
+
 Route::get('/videos', [VideoController::class,'index'])->name('videos');
 Route::get('/videos/{video}', [VideoController::class, 'show'])->name('video.show');
 
+Route::get('/series', [SeriesController::class,'index'])->name('series');
+Route::get('/serie/{serie}', [SeriesController::class, 'show'])->name('series.show');
+
+    //Rutes per a gestionar videos amb permissos
 Route::middleware(['auth', 'can:manage-videos'])->group(function () {
-    Route::get('/video/create', [VideosManageController::class, 'create'])->name('video.create');
     Route::get('/video/manage', [VideosManageController::class, 'index'])->name('videos.manage');
-    Route::post('videos/store', [VideosManageController::class,'store'])->name('video.store');
     Route::get('/videos/{video}/edit', [VideosManageController::class, 'edit'])->name('video.edit');
-    Route::put('/videos/{video}', [VideosManageController::class, 'update'])->name('video.update');
     Route::get('/videos/{video}/delete', [VideosManageController::class, 'delete'])->name('video.delete');
+
+    //Rutes per a gestionar videos
+});
+Route::middleware(['auth'])->group(function () {
+    Route::get('/video/create', [VideosManageController::class, 'create'])->name('video.create');
+    Route::post('/videos/store', [VideosManageController::class,'store'])->name('video.store');
+    Route::get('/videosUser/{video}/edit', [VideoController::class, 'edit'])->name('videoUser.edit');
+    Route::put('/videos/{video}', [VideosManageController::class, 'update'])->name('video.update');
+    Route::get('/videosUser/{video}/delete', [VideoController::class, 'delete'])->name('videoUser.delete');
     Route::delete('/videos/{video}/destroy', [VideosManageController::class, 'destroy'])->name('video.destroy');
 });
 
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/users', [UsersController::class, 'index'])->name('users');
-    Route::get('/user/{user}', [UsersController::class, 'show'])->name('user.show');
-
+    //Rutes per gestionar series
+Route::middleware(['auth', 'can:manage-series'])->group(function () {
+    Route::get('/series/manage', [SeriesManageController::class, 'index'])->name('series.manage');
+    Route::get('/series/create', [SeriesManageController::class, 'create'])->name('series.create');
+    Route::post('/series', [SeriesManageController::class, 'store'])->name('series.store');
+    Route::get('/series/{serie}/edit', [SeriesManageController::class, 'edit'])->name('series.edit');
+    Route::put('/series/{serie}', [SeriesManageController::class, 'update'])->name('series.update');
+    Route::get('/series/{serie}/delete', [SeriesManageController::class, 'delete'])->name('series.delete');
+    Route::delete('/series/{serie}/destroy', [SeriesManageController::class, 'destroy'])->name('series.destroy');
 });
 
-Route::middleware(['auth', 'can:manage users'])->group(function () {
+
+    //Rutes per gestionar usuaris
+Route::middleware(['auth', 'can:manage-users'])->group(function () {
     Route::get('/users/manage', [UsersManageController::class, 'index'])->name('users.manage');
     Route::get('/users/create', [UsersManageController::class, 'create'])->name('user.create');
     Route::post('/users/store', [UsersManageController::class, 'store'])->name('user.store');
@@ -40,6 +64,8 @@ Route::middleware(['auth', 'can:manage users'])->group(function () {
     Route::get('/users/{user}/delete', [UsersManageController::class, 'delete'])->name('user.delete');
     Route::delete('/users/{user}/destroy', [UsersManageController::class, 'destroy'])->name('user.destroy');
 });
+
+
 
 
 

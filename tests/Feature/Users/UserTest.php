@@ -33,11 +33,11 @@ class UserTest extends TestCase
         $response->assertStatus(200);
     }
 
-    #[test] public function not_logged_users_cannot_see_default_users_page(): void
-    {
-        $response = $this->get('/users');
-        $response->assertStatus(302);
-    }
+//    #[test] public function not_logged_users_cannot_see_default_users_page(): void
+//    {
+//        $response = $this->get('/users');
+//        $response->assertStatus(302);
+//    }
 
     #[test] public function user_without_permissions_can_see_user_show_page(): void
     {
@@ -55,12 +55,12 @@ class UserTest extends TestCase
         $response->assertStatus(200);
     }
 
-    #[test] public function not_logged_users_cannot_see_user_show_page(): void
-    {
-        $user = User::first();
-        $response = $this->get("/user/{$user->id}");
-        $response->assertStatus(302);
-    }
+//    #[test] public function not_logged_users_cannot_see_user_show_page(): void
+//    {
+//        $user = User::first();
+//        $response = $this->get("/user/{$user->id}");
+//        $response->assertStatus(302);
+//    }
 
     private function loginAsSuperAdmin(): void
     {

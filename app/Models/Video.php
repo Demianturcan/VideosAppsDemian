@@ -27,6 +27,11 @@ class Video extends Model
         'url',
         'series_id'
     ];
+
+    public function series(): BelongsTo
+    {
+        return $this->belongsTo(Serie::class);
+    }
     public function user(): BelongsTo
     {
         return $this-> belongsTo(User::class);

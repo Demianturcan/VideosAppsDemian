@@ -54,7 +54,10 @@ class User extends Authenticatable
     {
         return $this -> hasMany(Video::class);
     }
-
+    public function multimedia(): HasMany
+    {
+        return $this->hasMany(Multimedia::class);
+    }
     public function teams(): BelongsToMany
     {
         return $this->belongsToMany(Team::class);

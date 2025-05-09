@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Serie;
+use App\Models\Series;
 use App\Models\Video;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
@@ -23,55 +27,88 @@ class VideosManageController extends Controller
 
     public function create() : View
     {
-        return view ('videos.manage.create');
+        $previousUrl = url()->previous();
+        $series = Serie::all();
+        return view('videos.manage.create', ['series' => $series, 'previousUrl' => $previousUrl]);
     }
     public function store(Request $request): RedirectResponse
     {
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'url' => 'required|url',
             'previous' => 'nullable|integer|exists:videos,id',
             'next' => 'nullable|integer|exists:videos,id',
-            'series_id' => 'required|integer',
-            'user_id' => 'required|exists:users,id',
+            'series_id' => 'nullable|integer',
+            'previous_url' => 'nullable|url',
         ]);
+        $validated['user_id'] = auth()->user()->id;
         $validated['published_at'] = now();
         Video::create($validated);
-        return redirect()->route('videos.manage')->with('success', 'Video created successfully.');
+        $previousUrl = $validated['previous_url'] ?? route('videos.manage');
+        return redirect($previousUrl)->with('success', 'Video created successfully.');
     }
 
     public function edit(Video $video): View
     {
-        return view('videos.manage.edit', compact('video'));
+        $previousUrl = url()->previous();
+        $series = Serie::all();
+        return view('videos.manage.edit', ['video' => $video, 'series' => $series, 'previousUrl' => $previousUrl]);
     }
 
     public function update(Request $request, Video $video): RedirectResponse
     {
+
+        if (($video->user_id !== auth()->user()->id) && (!auth()->user()->can('manage-videos'))) {
+            return redirect()->route('videos')->with('error', 'You are not authorized to update this video.');
+        }
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'url' => 'required|url',
             'previous' => 'nullable|integer|exists:videos,id',
             'next' => 'nullable|integer|exists:videos,id',
-            'series_id' => 'required|integer'
-
+            'series_id' => 'nullable|integer',
+            'previous_url' => 'nullable|url'
         ]);
-
         $video->update($validated);
-        return redirect()->route('videos.manage')->with('success', 'Video updated successfully.');
+
+        $previousUrl = $validated['previous_url'] ?? route('videos.manage');
+        return redirect($previousUrl)->with('success', 'Video updated successfully.');
     }
 
     public function delete(Video $video)
     {
-
-        return view('videos.manage.delete', compact('video'));
+        $previousUrl = url()->previous();
+        return view('videos.manage.delete', ['video' => $video, 'previousUrl' => $previousUrl]);
     }
 
-    public function destroy(Video $video): RedirectResponse
+    public function destroy(Request $request, Video $video): RedirectResponse
     {
+        if (($video->user_id !== auth()->user()->id) && (!auth()->user()->can('manage-videos'))) {
+            return redirect()->route('videos')->with('error', 'You are not authorized to update this video.');
+        }
+
+        $validated = $request->validate([
+            'previous_url' => 'nullable|string'
+        ]);
+
         $video->delete();
-        return redirect()->route('videos.manage')->with('success', 'Video deleted successfully.');
+
+        $previousUrl = $validated['previous_url'] ?? route('videos.manage');
+        $client = new Client();
+        try {
+            $response = $client->request('GET', $previousUrl);
+            if ($response->getStatusCode() == 200) {
+                return redirect($previousUrl)->with('success', 'Video deleted successfully.');
+            } else {
+                return redirect()->route('videos')->with('success', 'Video deleted successfully.');
+            }
+        } catch (GuzzleException $e) {
+            return redirect()->route('videos')->with('success', 'Video deleted successfully.');
+        }
     }
 }
 

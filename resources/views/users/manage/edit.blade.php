@@ -10,26 +10,26 @@
                     <div class="mb-4">
                         <label for="name" class="block text-sm font-medium text-gray-700">Name:</label>
                         <input type="text" name="name" value="{{ old('name', $user->name) }}" required
-                               class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                               class="mt-1 block w-full border border-gray-300 rounded-sm p-2"
                                placeholder="Enter user name">
                     </div>
 
                     <div class="mb-4">
                         <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
                         <input type="email" name="email" value="{{ old('email', $user->email) }}" required
-                               class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                               class="mt-1 block w-full border border-gray-300 rounded-sm p-2"
                                placeholder="Enter user email">
                     </div>
 
                     <div class="mb-4">
                         <label for="password" class="block text-sm font-medium text-gray-700">Password:</label>
-                        <input type="password" name="password" class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                        <input type="password" name="password" class="mt-1 block w-full border border-gray-300 rounded-sm p-2"
                                placeholder="Enter new password (leave blank to keep current)">
                     </div>
 
                     <div class="mb-4">
                         <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm Password:</label>
-                        <input type="password" name="password_confirmation" class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                        <input type="password" name="password_confirmation" class="mt-1 block w-full border border-gray-300 rounded-sm p-2"
                                placeholder="Confirm new password (leave blank to keep current)">
                     </div>
 

@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\SerieHelpers;
 use App\Helpers\UserHelpers;
 use App\Helpers\VideoHelpers;
+use App\Models\Serie;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Video;
@@ -26,9 +28,9 @@ class DatabaseSeeder extends Seeder
 
 */
 
-        if (!Permission::where('name', 'manage videos')->exists()) {
-            UserHelpers::create_permissions();
-        }
+      if (!Permission::where('name', 'manage videos')->exists()) {
+           UserHelpers::create_permissions();
+     }
 
         if (!User::where('email', config('users.default.email'))->exists()) {
             UserHelpers::createDefaultUser();
@@ -42,12 +44,16 @@ class DatabaseSeeder extends Seeder
             UserHelpers::create_superadmin_user();
         }
 
-        if (!User::where('email', 'regular@videosapp.com')->exists()) {
+        if (!User::where('email', 'regularuser@videosapp.com')->exists()) {
             UserHelpers::create_regular_user();
         }
 
         if (!User::where('email', 'videomanager@videosapp.com')->exists()) {
             UserHelpers::create_video_manager_user();
+        }
+
+        if (!Serie::where('title', 'Series 1')->exists() && !Serie::where('title', 'Series 2')->exists() && !Serie::where('title', 'Series 3')->exists()) {
+            SerieHelpers::create_series();
         }
 
         if (!Video::where('title', config('videos.default.title'))->exists()) {

@@ -19,7 +19,7 @@
                 <x-label for="email" value="{{ __('Email') }}" />
 {{--                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />--}}
                 <input id="email" type="email" name="email" value="{{ old('email', 'videomanager@videosapp.com') }}" required autofocus
-                       class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                       class="mt-1 block w-full border border-gray-300 rounded-sm p-2"
                        placeholder="Enter your email">
             </div>
 
@@ -27,7 +27,7 @@
                 <x-label for="password" value="{{ __('Password') }}" />
 {{--                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />--}}
                 <input id="password" type="password" name="password" value="{{ old('password', '123456789') }}" required
-                       class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                       class="mt-1 block w-full border border-gray-300 rounded-sm p-2"
                        placeholder="Enter your password">
             </div>
 
@@ -40,7 +40,7 @@
 
             <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif

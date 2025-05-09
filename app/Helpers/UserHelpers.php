@@ -84,7 +84,7 @@ class UserHelpers
         self::add_personal_team($user);
 
         $user->givePermissionTo('manage videos');
-
+        $user->givePermissionTo('manage series');
         return $user;
     }
 
@@ -102,6 +102,7 @@ class UserHelpers
         $user->assignRole('super admin');
         $user->givePermissionTo('manage videos');
         $user->givePermissionTo('manage users');
+        $user->givePermissionTo('manage series');
         $user->save();
 
         return $user;
@@ -113,6 +114,12 @@ class UserHelpers
             return $user->hasPermissionTo('manage videos');
         });
 
+        Gate::define('manage-users', function ($user) {
+            return $user->hasPermissionTo('manage users');
+        });
+        Gate::define('manage-series', function ($user) {
+            return $user->hasPermissionTo('manage series');
+        });
         Gate::define('super-admin', function ($user) {
             return $user->hasRole('super admin');
         });
@@ -125,6 +132,7 @@ class UserHelpers
 
         Permission::create(['name' => 'manage videos']);
         Permission::create(['name' => 'manage users']);
+        Permission::create(['name' => 'manage series']);
         $role = Role::firstOrCreate(['name' => 'super admin']);
         $permissions = Permission::all();
         $role->syncPermissions($permissions);
