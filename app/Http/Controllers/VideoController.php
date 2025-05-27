@@ -41,26 +41,7 @@ class VideoController extends Controller
         return view('videos.manage.edit', ['video' => $video, 'series' => $series, 'previousUrl' => $previousUrl]);
     }
 
-    public function update(Request $request, Video $video): RedirectResponse
-    {
-        if ($video->user_id !== Auth::id()) {
-            return redirect()->route('videos')->with('error', 'You are not authorized to update this video.');
-        }
 
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'url' => 'required|url',
-            'previous' => 'nullable|integer|exists:videos,id',
-            'next' => 'nullable|integer|exists:videos,id',
-            'series_id' => 'nullable|integer',
-            'previous_url' => 'nullable|url'
-        ]);
-
-        $video->update($validated);
-
-        return redirect()->route('videos')->with('success', 'Video updated successfully.');
-    }
 
     public function delete(Video $video)
     {

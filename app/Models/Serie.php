@@ -17,6 +17,7 @@ class Serie extends Model
         'description',
         'image',
         'user_name',
+        'user_id',
         'user_photo_url',
         'published_at'
     ];
@@ -33,7 +34,10 @@ class Serie extends Model
     {
         return $this->hasMany(Video::class, 'series_id');
     }
-
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class, 'user_id');
+    }
     /**
      * Get the formatted created_at date.
      *

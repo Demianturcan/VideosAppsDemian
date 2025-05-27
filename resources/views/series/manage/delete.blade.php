@@ -19,7 +19,7 @@
                         Delete Series
                     </button>
                 </form>
-                <a href="{{ route('series.manage') }}"
+                <a href="{{ url()->previous() }}"
                    class="text-center text-gray-500 no-underline bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded inline-block">Cancel</a>
             </div>
         </div>

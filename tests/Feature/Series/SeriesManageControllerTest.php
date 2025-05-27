@@ -27,40 +27,43 @@ class SeriesManageControllerTest extends TestCase
         $response = $this->get('/series/create');
         $response->assertStatus(200);
     }
-    #[test]
-    public function user_without_series_manage_create_cannot_see_add_series(): void
-    {
-        $this->loginAsRegularUser();
-        $response = $this->get('/series/create');
-
-        $response->assertStatus(403);
-    }
+//     Comentat per canvi de logica en els sprints posteriors
+//    #[test]
+//    public function user_without_series_manage_create_cannot_see_add_series(): void
+//    {
+//        $this->loginAsRegularUser();
+//        $response = $this->get('/series/create');
+//
+//        $response->assertStatus(403);
+//    }
     #[test]
     public function user_with_permissions_can_store_series(): void
     {
         $this->loginAsSuperAdmin();
-        $response = $this->post('/series', [
+        $response = $this->post('/series/store', [
             'title' => 'Test Series',
             'description' => 'Test Description',
             'image' => 'https://miro.medium.com/v2/resize:fit:1400/0*AS978n4BHNj52lx8',
+            'previous_url' => route('series')
         ]);
 
-        $response->assertRedirect('/series/manage');
+        $response->assertRedirect(route('series'));
         $this->assertDatabaseHas('series', ['title' => 'Test Series']);
     }
-    #[test]
-    public function user_without_permissions_cannot_store_series(): void
-    {
-        $this->loginAsRegularUser();
-        $response = $this->post('/series', [
-            'title' => 'Test Series',
-            'description' => 'Test Description',
-            'image' => 'test.jpg',
-        ]);
-
-        $response->assertStatus(403);
-        $this->assertDatabaseMissing('series', ['title' => 'Test Series']);
-    }
+//  Comentat per canvi de logica en els sprints posteriors
+//    #[test]
+//    public function user_without_permissions_cannot_store_series(): void
+//    {
+//        $this->loginAsRegularUser();
+//        $response = $this->post('/series', [
+//            'title' => 'Test Series',
+//            'description' => 'Test Description',
+//            'image' => 'test.jpg',
+//        ]);
+//
+//        $response->assertStatus(403);
+//        $this->assertDatabaseMissing('series', ['title' => 'Test Series']);
+//    }
     #[test]
     public function user_with_permissions_can_destroy_series(): void
     {
@@ -76,11 +79,25 @@ class SeriesManageControllerTest extends TestCase
     #[test]
     public function user_without_permissions_cannot_destroy_series(): void
     {
+        $admin = User::where('email', 'superadmin@videosapp.com')->first() ?? UserHelpers::create_superadmin_user();
+
+        $serie = Serie::create([
+            'title' => 'Admin Series',
+            'description' => 'Series owned by admin',
+            'image' => 'http://example.com/image.jpg',
+            'user_id' => $admin->id,
+            'user_name' => $admin->name,
+            'user_photo_url' => $admin->profile_photo_url,
+            'published_at' => now()
+        ]);
+
         $this->loginAsRegularUser();
-        $serie = Serie::first();
+
         $response = $this->delete('/series/' . $serie->id . '/destroy');
 
-        $response->assertStatus(403);
+        $response->assertStatus(302);
+        $response->assertRedirect(route('series'));
+
         $this->assertDatabaseHas('series', ['id' => $serie->id]);
     }
     #[test]
@@ -110,23 +127,38 @@ class SeriesManageControllerTest extends TestCase
             'title' => 'Updated Series',
             'description' => 'Updated Description',
             'image' => 'updated.jpg',
+            'previous_url' => route('series.manage')
         ]);
 
-        $response->assertRedirect('/series/manage');
+        $response->assertRedirect(route('series.manage'));
         $this->assertDatabaseHas('series', ['id' => $serie->id, 'title' => 'Updated Series']);
     }
     #[test]
     public function user_without_permissions_cannot_update_series(): void
     {
+        $admin = User::where('email', 'superadmin@videosapp.com')->first() ?? UserHelpers::create_superadmin_user();
+
+        $serie = Serie::create([
+            'title' => 'Admin Series',
+            'description' => 'Series owned by admin',
+            'image' => 'http://example.com/image.jpg',
+            'user_id' => $admin->id,
+            'user_name' => $admin->name,
+            'user_photo_url' => $admin->profile_photo_url,
+            'published_at' => now()
+        ]);
+
         $this->loginAsRegularUser();
-        $serie = Serie::first();
+
         $response = $this->put('/series/' . $serie->id, [
             'title' => 'Updated Series',
             'description' => 'Updated Description',
             'image' => 'updated.jpg',
         ]);
 
-        $response->assertStatus(403);
+        $response->assertStatus(302);
+        $response->assertRedirect(route('series'));
+
         $this->assertDatabaseMissing('series', ['title' => 'Updated Series']);
     }
     #[test]

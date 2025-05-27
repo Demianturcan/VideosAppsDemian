@@ -3,7 +3,15 @@
     <section class="flex flex-col min-h-screen bg-gray-100 p-6">
         <div class="flex-grow">
             <div class="max-w-5xl mx-auto">
-                <h1 class="text-3xl font-bold mb-4 text-pink-800">{{ $serie->title }}</h1>
+                <div class="flex justify-between items-center mb-4">
+                    <h1 class="text-3xl font-bold text-pink-800">{{ $serie->title }}</h1>
+                    @if(Auth::check() && Auth::user()->id == $serie->user_id)
+                        <div class="flex space-x-2">
+                            <a href="{{ route('seriesUser.edit', $serie->id) }}" class="bg-pink-800 hover:bg-pink-900 text-white font-bold py-2 px-4 rounded-sm">Edit</a>
+                            <a href="{{ route('seriesUser.delete', $serie->id) }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-sm">Delete</a>
+                        </div>
+                    @endif
+                </div>
                 <p class="text-gray-700 mb-6">{{ $serie->description }}</p>
                 @if($serie->image)
                     <img src="{{ $serie->image }}" alt="{{ $serie->title }}" class="w-full h-64 object-cover mb-6">

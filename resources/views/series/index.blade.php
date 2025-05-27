@@ -4,9 +4,10 @@
         <div class="flex-grow">
             <div class="max-w-7xl mx-auto">
                 <h1 class="text-2xl font-bold mb-4">Series List</h1>
+                <a href="{{ route('series.create') }}" class="bg-pink-800 text-white px-4 py-2 rounded-sm hover:bg-pink-700 no-underline mb-4 inline-block">Create Series</a>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     @foreach($series as $serie)
-                        <div class="group bg-white hover:shadow-md shadow-sm rounded-lg overflow-hidden">
+                        <div class="group bg-white hover:shadow-md shadow-sm rounded-sm overflow-hidden">
                             <div class="p-4 hover:bg-gray-50 cursor-pointer"
                                  onclick="window.location='{{ route('series.show', $serie->id) }}'">
                                 <h2 class="text-lg font-bold text-pink-800 group-hover:text-pink-600 transition-colors duration-100">{{ $serie->title }}</h2>

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\VideoCreated;
 use App\Models\Serie;
-use App\Models\Series;
 use App\Models\Video;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -45,8 +45,11 @@ class VideosManageController extends Controller
         ]);
         $validated['user_id'] = auth()->user()->id;
         $validated['published_at'] = now();
-        Video::create($validated);
-        $previousUrl = $validated['previous_url'] ?? route('videos.manage');
+        $video = Video::create($validated);
+
+        event(new VideoCreated($video));
+
+        $previousUrl = $validated['previous_url'] ?? route('videos');
         return redirect($previousUrl)->with('success', 'Video created successfully.');
     }
 

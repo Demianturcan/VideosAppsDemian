@@ -6,6 +6,7 @@
                 <h1 class="text-2xl font-bold mb-4 text-center">Edit Series</h1>
                 <form action="{{ route('series.update', $serie->id) }}" method="post">
                     @csrf
+                    <input type="hidden" name="previous_url" value="{{ $previousUrl }}">
                     @method('PUT')
 
                     <div class="mb-4">
@@ -39,7 +40,7 @@
                         Update Series
                     </button>
                 </form>
-                <a href="{{ route('series.manage') }}"
+                <a href="{{ url()->previous() }}"
                    class="text-center text-gray-500 no-underline bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded inline-block mt-4">Cancel</a>
             </div>
         </div>

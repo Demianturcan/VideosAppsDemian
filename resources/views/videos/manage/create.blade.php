@@ -8,7 +8,6 @@
                     @csrf
                     <input type="hidden" name="previous_url" value="{{ $previousUrl }}">
                     <div class="mb-4">
-                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                         <label for="title" class="block text-sm font-medium text-gray-700">Title:</label>
                         <input type="text" name="title" value="{{ old('title', 'Default Title') }}" required
                                class="mt-1 block w-full border border-gray-300 rounded-sm p-2"
