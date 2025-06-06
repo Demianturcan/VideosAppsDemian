@@ -1,10 +1,10 @@
-@extends('layouts.videosapp')
-@section('content')
+<x-videos-app-layout>
+
     <section class="flex flex-col min-h-screen bg-gray-100 p-6">
         <div class="flex-grow">
             <div class="max-w-5xl mx-auto">
                 <h1 class="text-2xl font-bold mb-4">User List</h1>
-                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="bg-white shadow rounded-sm overflow-hidden">
                     <table class="min-w-full table-auto">
                         <thead class="bg-gray-200">
                         <tr>
@@ -21,8 +21,8 @@
                                     <img class="h-10 w-10 rounded-full object-cover"
                                          src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}">
                                 </td>
-                                <td class="px-4 py-2 text-pink-800 font-bold">{{ $user->name }}</td>
-                                <td class="px-4 py-2 text-gray-700">{{ $user->email }}</td>
+                                <td class="px-4 py-2 text-pink-800 font-medium">{{ $user->name }}</td>
+                                <td class="px-4 py-2 text-gray-700 font-medium">{{ $user->email }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -31,4 +31,5 @@
             </div>
         </div>
     </section>
-@endsection
+
+</x-videos-app-layout>

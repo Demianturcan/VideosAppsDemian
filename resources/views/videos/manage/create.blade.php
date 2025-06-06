@@ -1,8 +1,8 @@
-@extends('layouts.videosapp')
-@section('content')
+<x-videos-app-layout>
+
     <section class="flex flex-col min-h-screen bg-gray-100 p-6">
         <div class="flex-grow">
-            <div class="sm:max-w-lg mx-auto bg-white shadow-sm rounded-sm p-6">
+            <div class="sm:max-w-lg mx-auto bg-white shadow rounded-sm p-6">
                 <h1 class="text-2xl font-bold mb-4">Add New Video</h1>
                 <form action="{{ route('video.store') }}" method="post" data-qa="form-create-video">
                     @csrf
@@ -33,7 +33,7 @@
                     <div class="mb-4">
                         <label for="series_id" class="block text-gray-700 font-bold mb-2">Series</label>
                         <select id="series_id" name="series_id"
-                                class="w-full border-gray-300 rounded-sm shadow-sm focus:ring focus:ring-blue-200 focus:border-blue-500">
+                                class="w-full border-gray-300 rounded-sm shadow focus:ring focus:ring-blue-200 focus:border-blue-500">
                             <option value="">No Series</option>
                             @foreach($series as $serie)
                                 <option value="{{ $serie->id }}" {{ old('series_id', $video->series_id ?? '') == $serie->id ? 'selected' : '' }}>
@@ -44,16 +44,17 @@
                     </div>
                     <div class="flex justify-between items-center mt-4">
 
-                        <a href="{{ url()->previous() }}"
-                           class="text-gray-500 no-underline bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-sm inline-block"
-                           data-qa="link-return">Return</a>
+                        <x-button-gray href="{{ url()->previous() }}" color="gray-200">
+                            Return
+                        </x-button-gray>
 
-                        <button type="submit" class="bg-pink-800 text-white px-6 py-2 rounded-sm hover:bg-pink-700"
-                                data-qa="button-submit">Add Video
-                        </button>
+                        <x-button-pink type="submit">
+                            Add Video
+                        </x-button-pink>
                     </div>
                 </form>
             </div>
         </div>
     </section>
-@endsection
+
+</x-videos-app-layout>

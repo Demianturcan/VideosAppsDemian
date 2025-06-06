@@ -1,6 +1,6 @@
-@extends('layouts.videosapp')
+<x-videos-app-layout>
 
-@section('content')
+
     <div class="container mx-auto py-8">
         <h1 class="text-2xl font-bold mb-6">Notifications</h1>
 
@@ -23,7 +23,5 @@
                 });
         });
     </script>
-@endsection
 
-
-
+</x-videos-app-layout>

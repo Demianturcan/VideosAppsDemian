@@ -16,7 +16,7 @@ class VideosAppLayout extends Component
      */
     public function __construct()
     {
-        $this->view = 'layouts.videos-app';
+        $this->view = 'layouts.videosapp';
     }
 
     /**

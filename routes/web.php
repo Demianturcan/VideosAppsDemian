@@ -40,7 +40,7 @@ Route::middleware(['auth', 'can:manage-videos'])->group(function () {
     //Rutes per a gestionar videos
 Route::middleware(['auth'])->group(function () {
     Route::get('/video/create', [VideosManageController::class, 'create'])->name('video.create');
-    Route::post('/videos/store', [VideosManageController::class,'store'])->name('video.store');
+    Route::post('/video/store', [VideosManageController::class,'store'])->name('video.store');
     Route::get('/videosUser/{video}/edit', [VideoController::class, 'edit'])->name('videoUser.edit');
     Route::put('/videos/{video}', [VideosManageController::class, 'update'])->name('video.update');
     Route::get('/videosUser/{video}/delete', [VideoController::class, 'delete'])->name('videoUser.delete');

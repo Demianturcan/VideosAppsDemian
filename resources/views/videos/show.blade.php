@@ -1,8 +1,8 @@
-@extends('layouts.videosapp')
-@section('content')
+<x-videos-app-layout>
+
     <section class="flex flex-col min-h-screen bg-gray-100 p-6">
         <div class="flex-grow">
-            <div class="max-w-3xl mx-auto bg-white shadow-sm rounded-sm overflow-hidden">
+            <div class="max-w-3xl mx-auto bg-white shadow rounded-sm overflow-hidden">
                 <!-- Video Player -->
                 <div class="relative w-full" style="padding-bottom: 56.3%;"> <!-- 4:3 aspect ratio -->
                     <iframe class="absolute w-full h-full" src="{{ $video->url }}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
@@ -58,4 +58,5 @@
             </div>
         </div>
     </section>
-@endsection
+
+</x-videos-app-layout>

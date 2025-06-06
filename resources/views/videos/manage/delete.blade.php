@@ -1,8 +1,8 @@
-@extends('layouts.videosapp')
-@section('content')
+<x-videos-app-layout>
+
     <section class="flex flex-col min-h-screen bg-gray-100 p-6">
         <div class="flex-grow">
-            <div class="max-w-md mx-auto bg-white shadow-sm rounded-sm p-6">
+            <div class="max-w-md mx-auto bg-white shadow rounded-sm p-6">
                 <h1 class="text-2xl font-bold mb-4 text-center text-red-600">Delete Video</h1>
                 <p class="text-center text-gray-700 mb-6">Are you sure you want to delete the video <strong>"{{ $video->title }}"</strong>?</p>
                 <form action="{{ route('video.destroy', $video->id) }}" method="post">
@@ -20,4 +20,5 @@
             </div>
         </div>
     </section>
-@endsection
+
+</x-videos-app-layout>

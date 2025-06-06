@@ -1,5 +1,5 @@
-@extends('layouts.videosapp')
-@section('content')
+<x-videos-app-layout>
+
     <section class="flex flex-col min-h-screen bg-gray-100 p-6">
         <div class="flex-grow">
             <div class="max-w-5xl mx-auto">
@@ -53,4 +53,4 @@
             </div>
         </div>
     </section>
-@endsection
+</x-videos-app-layout>

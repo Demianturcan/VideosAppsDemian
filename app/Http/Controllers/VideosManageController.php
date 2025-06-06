@@ -45,12 +45,14 @@ class VideosManageController extends Controller
         ]);
         $validated['user_id'] = auth()->user()->id;
         $validated['published_at'] = now();
-        $video = Video::create($validated);
-
-        event(new VideoCreated($video));
-
         $previousUrl = $validated['previous_url'] ?? route('videos');
-        return redirect($previousUrl)->with('success', 'Video created successfully.');
+        try {
+            $video = Video::create($validated);
+            event(new VideoCreated($video));
+            return redirect($previousUrl)->with('success', 'Video "' . $video->title . '" created succesfully!');
+        } catch (\Exception $e) {
+            return redirect($previousUrl)->with('error', 'There was an error creating the video. ' . $e->getMessage());
+        }
     }
 
     public function edit(Video $video): View
@@ -76,10 +78,13 @@ class VideosManageController extends Controller
             'series_id' => 'nullable|integer',
             'previous_url' => 'nullable|url'
         ]);
-        $video->update($validated);
-
         $previousUrl = $validated['previous_url'] ?? route('videos.manage');
-        return redirect($previousUrl)->with('success', 'Video updated successfully.');
+        try {
+            $video->update($validated);
+            return redirect($previousUrl)->with('success', 'Video "' . $video->title . '" updated successfully!');
+        } catch (\Exception $e) {
+            return redirect($previousUrl)->with('error', 'There was an error updating the video. ' . $e->getMessage());
+        }
     }
 
     public function delete(Video $video)

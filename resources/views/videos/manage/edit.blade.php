@@ -1,5 +1,5 @@
-@extends('layouts.videosapp')
-@section('content')
+<x-videos-app-layout>
+
     <section class="flex flex-col min-h-screen bg-gray-100 p-6">
         <div class="flex-grow">
             <div class="max-w-lg mx-auto bg-white shadow-md rounded-sm p-6">
@@ -33,7 +33,7 @@
                     <div class="mb-4">
                         <label for="series_id" class="block text-gray-700 font-bold mb-2">Serie</label>
                         <select id="series_id" name="series_id"
-                                class="w-full border-gray-300 rounded-sm shadow-sm focus:ring focus:ring-blue-200 focus:border-blue-500">
+                                class="w-full border-gray-300 rounded-sm shadow focus:ring focus:ring-blue-200 focus:border-blue-500">
                             <option value="">No Serie </option>
                             @foreach($series as $serie)
                                 <option value="{{ $serie->id }}" {{ old('series_id', $video->series_id) == $serie->id ? 'selected' : '' }}>
@@ -54,4 +54,5 @@
             </div>
         </div>
     </section>
-@endsection
+
+</x-videos-app-layout>
